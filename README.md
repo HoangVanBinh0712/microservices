@@ -32,8 +32,5 @@ The Sale service manages sales-related operations. Like the Admin service, it re
 
 ## Prerequisites
 
-- Java 8 or later
+- Java 17+
 - Maven 3.6+
-- Docker (optional, for containerization)
-
-## Running the Services
