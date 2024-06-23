@@ -1,0 +1,21 @@
+name: Sale
+
+server:
+  port: 8082
+  servlet:
+    context-path: /sale
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+spring:
+  cloud:
+    config:
+      enabled: false
+
+  application:
+    name: sale-service

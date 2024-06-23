@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  host: localhost
+  admin-url: /admin/v3/api-docs
+  sale-url: /sale/v3/api-docs
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/admin/**
+        - id: sale-service
+          uri: lb://sale-service
+          predicates:
+            - Path=/sale/**
+
+springdoc:
+  api-docs:
+    groups:
+      enabled: true
+    enabled: true
+  group-configs:
+    - group: admin-service
+      paths-to-match: /admin/**/v3/api-docs
+    - group: sale-service
+      paths-to-match: /sale/**/v3/api-docs
+  swagger-ui:
+    config-url: /v3/api-docs/swagger-config
+    url: /v3/api-docs
+    urls:
+      - url: ${server.admin-url}
+        name: Admin
+      - url: ${server.sale-url}
+        name: Sale
+    csrf:
+      enabled: true
