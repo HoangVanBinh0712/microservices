@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: gateway
+  name: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: gateway
+  template:
+    metadata:
+      labels:
+        name: gateway
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: app-config-map
+          image: <Aws_Account_ID>.dkr.ecr.us-east-1.amazonaws.com/gateway:latest
+          name: gateway
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+      restartPolicy: Always

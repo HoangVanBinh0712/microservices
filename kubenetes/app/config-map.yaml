@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config-map
+data:
+  EUREKA_HOST_NAME: "eureka"
+  ZIPKIN_HOST_NAME: "zipkin"
