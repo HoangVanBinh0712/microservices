@@ -1,36 +1,62 @@
 # Microservice Architecture with Spring Cloud
 
-This repository contains a microservice architecture implemented using Spring Cloud. The project consists of multiple services: Eureka (service discovery), Gateway (API Gateway), Admin, Sale, and Common.
+1. A microservice architecture implemented using `Spring Cloud`.
+2. Integration of `Zipkin` for managing and tracing requests between services.
+3. `Docker` image creation and a docker-compose.yaml file to run the services in containers.
+4. `Kubernetes` deployment for managing application containers (using `Minikube` for local testing and EKS for `AWS`).
 
-## Services Overview
+## Application Overview
 
 - **Eureka**: Service registry for managing microservices.
 - **Gateway**: API Gateway for routing requests to appropriate services.
-- **Admin**: Admin service for handling admin-related operations.
-- **Sale**: Sale service for handling sales-related operations.
-- **Common**: Shared configurations and libraries for the Admin and Sale services.
+- **Admin**: Service for handling admin-related operations.
+- **Sale**: Service for handling sales-related operations.
+- **Common**: Shared configurations and libraries for Admin and Sale services.
 
-## Common
+### URLs
 
-The `Common` module contains common bean configurations, utility classes, and shared libraries used by both Admin and Sale services. This module helps in reducing code duplication and ensures consistency across services.
+- Swagger: [http://localhost:8080/webjars/swagger-ui/index.html](http://localhost:8080/webjars/swagger-ui/index.html)
+- Zipkin: [http://localhost:9411/zipkin/](http://localhost:9411/zipkin/)
 
-## Eureka
+## Deploying the Application on AWS
 
-The Eureka service acts as a service registry. All microservices register themselves with Eureka, enabling service discovery and client-side load balancing.
+### 1. Create Dockerfiles for Each Service
 
-## Gateway
+Coming soon...
 
-The Gateway service routes requests to the appropriate microservices based on predefined routes. It acts as a single entry point for all client requests.
+### 2. Running the Application with Containers
 
-## Admin
+**Step 1:** Create `docker-compose.yaml` file.
 
-The Admin service handles operations related to admin functionalities. It registers itself with the Eureka server and routes its traffic through the Gateway.
+**Step 2:** Run `docker compose up`.
 
-## Sale
+Ensure the application runs smoothly in containers and can interact across different containers.
 
-The Sale service manages sales-related operations. Like the Admin service, it registers with Eureka and is accessible via the Gateway.
+### 3. Deploying with Kubernetes on AWS (EKS)
+
+**Step 1:** Convert `docker-compose.yaml` to Kubernetes deployment and service files. ([See examples here](kubernetes))
+
+**Step 2:** Local Testing with Minikube
+
+Set up Minikube for local testing before deploying to EKS.
+
+**Step 3:** Create EKS Cluster and Deploy. ([See example commands here](run.txt))
+
+Set up EKS Cluster, Node Group, Roles, etc., on AWS, then apply the Kubernetes deployment and service files.
 
 ## Prerequisites
 
 - Java 17+
 - Maven 3.6+
+- Docker
+- Kubernetes
+- AWS Fundamentals
+
+## Reference Documentations
+
+- [Minikube Documentation](https://minikube.sigs.k8s.io/docs/)
+- [Kubernetes Documentation](https://kubernetes.io/docs/tasks/)
+- [Zipkin Documentation](https://zipkin.io/)
+- [Spring.io Microservices Guide](https://spring.io/microservices)
+
+Feel free to adapt and expand upon these sections to provide more detailed instructions and explanations tailored to your project.
