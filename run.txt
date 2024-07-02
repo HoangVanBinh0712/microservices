@@ -1,20 +1,9 @@
 Minikube
 	Start: minikube start --cpus=4 --memory=4196
-	Pull image from local machine to minikube: minikube image load docker/mmv2-eureka:1.0.0
+	Pull image from local machine to minikube: minikube image load docker/mmv2-eureka:1.0.0 (Do same thing with other containers)
+    Expose the url of gateway to local: minikube service gateway --url
 
-	kubectl apply -f eureka-deployment.yaml
-	kubectl apply -f eureka-service.yaml
-	kubectl apply -f gateway-deployment.yaml
-	kubectl apply -f gateway-service.yaml
-	kubectl apply -f zipkin-deployment.yaml
-	kubectl apply -f zipkin-service.yaml
-	kubectl apply -f admin-deployment.yaml
-	kubectl apply -f admin-service.yaml
-	kubectl apply -f sale-deployment.yaml
-	kubectl apply -f sale-service.yaml
-	kubectl apply -f zipkin-deployment.yaml
-	kubectl apply -f zipkin-service.yaml
-	
+
 Create EKS Cluster:
     Create EKS Node group:
         Policy:
@@ -35,3 +24,9 @@ Push image to ECR:
 
 Connect to EKS
 	aws eks --region <region> update-kubeconfig --name micro-service
+
+Command to apply:
+    kubectl apply -f config-map.yaml
+    kubectl apply -f zipkin-deployment.yaml
+    kubectl apply -f zipkin-service.yaml
+    kubectl apply -f /app
