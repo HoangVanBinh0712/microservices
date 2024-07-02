@@ -1,0 +1,37 @@
+Minikube
+	Start: minikube start --cpus=4 --memory=4196
+	Pull image from local machine to minikube: minikube image load docker/mmv2-eureka:1.0.0
+
+	kubectl apply -f eureka-deployment.yaml
+	kubectl apply -f eureka-service.yaml
+	kubectl apply -f gateway-deployment.yaml
+	kubectl apply -f gateway-service.yaml
+	kubectl apply -f zipkin-deployment.yaml
+	kubectl apply -f zipkin-service.yaml
+	kubectl apply -f admin-deployment.yaml
+	kubectl apply -f admin-service.yaml
+	kubectl apply -f sale-deployment.yaml
+	kubectl apply -f sale-service.yaml
+	kubectl apply -f zipkin-deployment.yaml
+	kubectl apply -f zipkin-service.yaml
+	
+Create EKS Cluster:
+    Create EKS Node group:
+        Policy:
+            + AmazonEMRReadOnlyAccessPolicy_v2
+            + AmazonEKSWorkerNodePolicy
+            + AmazonEKS_CNI_Policy
+            + AmazonEC2ContainerRegistryReadOnly
+
+Push image to ECR:
+	aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <user_id>.dkr.ecr.<region>.amazonaws.com
+
+	docker tag docker/mmv2-sale:1.0.0 <user_id>.dkr.ecr.<region>.amazonaws.com/sale:latest
+	docker tag docker/mmv2-eureka:1.0.0 <user_id>.dkr.ecr.<region>.amazonaws.com/eureka:latest
+	docker tag docker/mmv2-admin:1.0.0 <user_id>.dkr.ecr.<region>.amazonaws.com/admin:latest
+	docker tag docker/mmv2-gateway:1.0.0 <user_id>.dkr.ecr.<region>.amazonaws.com/gateway:latest
+
+	docker push 853121025513.dkr.ecr.us-east-1.amazonaws.com/admin:latest
+
+Connect to EKS
+	aws eks --region <region> update-kubeconfig --name micro-service

@@ -8,7 +8,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://${EUREKA_HOST_NAME:localhost}:8761/eureka/
   instance:
     prefer-ip-address: true
 
@@ -19,3 +19,18 @@ spring:
 
   application:
     name: admin-service
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://${ZIPKIN_HOST_NAME:localhost}:9411/api/v2/spans
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+swagger:
+  gateway-url: ${GATEWAY_URL:http://localhost:8080}${server.servlet.context-path}
+  description: Admin service

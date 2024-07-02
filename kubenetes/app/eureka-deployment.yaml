@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: eureka
+  name: eureka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: eureka
+  template:
+    metadata:
+      labels:
+        name: eureka
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: app-config-map
+          image: <Aws_Account_ID>.dkr.ecr.us-east-1.amazonaws.com/eureka:latest
+          name: eureka
+          ports:
+            - containerPort: 8761
+              protocol: TCP
+      restartPolicy: Always

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: admin-service
+  name: admin-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: admin-service
+  template:
+    metadata:
+      labels:
+        name: admin-service
+    spec:
+      containers:
+        - name: admin-service
+          image: <Aws_Account_ID>.dkr.ecr.us-east-1.amazonaws.com/admin:latest
+          envFrom:
+            - configMapRef:
+                name: app-config-map
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+      restartPolicy: Always
