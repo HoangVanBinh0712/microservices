@@ -1,0 +1,66 @@
+version: '3.7'
+
+services:
+  sale-service:
+    depends_on:
+      - zipkin
+      - eureka
+    image: sale-service:latest
+    ports:
+      - "8082:8082"
+    networks:
+      - common-network
+    environment:
+      - EUREKA_HOST_NAME=eureka
+      - ZIPKIN_HOST_NAME=zipkin
+
+  admin-service:
+    depends_on:
+      - zipkin
+      - eureka
+    image: admin-service:latest
+    ports:
+      - "8081:8081"
+    networks:
+      - common-network
+    environment:
+      - EUREKA_HOST_NAME=eureka
+      - ZIPKIN_HOST_NAME=zipkin
+
+  gateway:
+    depends_on:
+      - zipkin
+      - eureka
+      - sale-service
+      - admin-service
+    image: gateway:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - common-network
+    environment:
+      - EUREKA_HOST_NAME=eureka
+      - ZIPKIN_HOST_NAME=zipkin
+
+  eureka:
+    image: eureka:latest
+    ports:
+      - "8761:8761"
+    networks:
+      - common-network
+    environment:
+      - EUREKA_HOST_NAME=eureka
+      - ZIPKIN_HOST_NAME=zipkin
+
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
+    networks:
+      - common-network
+    environment:
+      - EUREKA_HOST_NAME=eureka
+      - ZIPKIN_HOST_NAME=zipkin
+
+networks:
+  common-network:
