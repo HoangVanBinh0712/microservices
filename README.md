@@ -22,7 +22,7 @@
 
 ### 1. Create Dockerfiles for Each Service
 
-Coming soon...
+Build docker images using openjdk:17-jdk-slim as parent image to run .Jar file.
 
 ### 2. Running the Application with Containers
 
