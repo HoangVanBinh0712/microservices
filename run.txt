@@ -1,3 +1,8 @@
+Zipkin:
+    docker build -t my-zipkin .
+    docker run -d -p 9411:9411 my-zipkin
+
+
 Minikube
 	Start: minikube start --cpus=4 --memory=4196
 	Pull image from local machine to minikube: minikube image load docker/mmv2-eureka:1.0.0 (Do same thing with other containers)
