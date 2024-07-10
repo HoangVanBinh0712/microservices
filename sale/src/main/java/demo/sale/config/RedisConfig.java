@@ -6,21 +6,18 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
 
 @Configuration
 public class RedisConfig {
@@ -88,28 +85,28 @@ public class RedisConfig {
         GenericJackson2JsonRedisSerializer jsonRedisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
 
         // Configure RedisCacheManager
-        RedisSerializationContext.SerializationPair jsonSerializer =
-            RedisSerializationContext.SerializationPair.fromSerializer(jsonRedisSerializer);
+        SerializationPair<Object> jsonSerializer =
+                                  RedisSerializationContext.SerializationPair.fromSerializer(jsonRedisSerializer);
         return RedisCacheManager.RedisCacheManagerBuilder
             .fromConnectionFactory(this.redisConnectionFactory())
             .cacheDefaults(
                 RedisCacheConfiguration.defaultCacheConfig()
-                    .entryTtl(Duration.ofDays(1))
-                    .serializeValuesWith(jsonSerializer)
-                    .disableCachingNullValues()
+                                       .entryTtl(Duration.ofDays(1))
+                                       .serializeValuesWith(jsonSerializer)
+                                       .disableCachingNullValues()
             )
             .build();
     }
-
-    public void saveConfigToFile(RedisConfig config, String filePath) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        objectMapper.writeValue(new File(filePath), config);
-    }
-
-    public static RedisConfig loadConfigFromFile(String filePath) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(new File(filePath), RedisConfig.class);
-    }
+//
+//    public void saveConfigToFile(RedisConfig config, String filePath) throws IOException {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+//        objectMapper.writeValue(new File(filePath), config);
+//    }
+//
+//    public static RedisConfig loadConfigFromFile(String filePath) throws IOException {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        return objectMapper.readValue(new File(filePath), RedisConfig.class);
+//    }
 
 }
