@@ -13,14 +13,29 @@
 - **Sale**: Service for handling sales-related operations.
 - **Common**: Shared configurations and libraries for Admin and Sale services.
 
+## Development Server
+- **Zipkin**: Zipkin server tracing request in microservices.
+- **Redis**: Redis server for caching, performance in microservices.
+- **Redis-commander**: Redis-commander server for UI of redis.
+
 ### URLs
 
 - Swagger: [http://localhost:8080/webjars/swagger-ui/index.html](http://localhost:8080/webjars/swagger-ui/index.html)
 - Zipkin: [http://localhost:9411/zipkin/](http://localhost:9411/zipkin/)
+- Redis: [http://localhost:6379](http://localhost:6379)
 
 ## Deploying the Application on AWS
 
-### 1. Create Dockerfiles for Each Service
+### 1. Running the Application with docker-compose
+
+cmd to run the application with docker-compose
+cd zipkin project
+```docker-compose -f docker-compose-zipkin.yml up```
+
+cd Redis project
+```docker-compose -f docker-compose-redis.yml up```
+
+### 2. Create Dockerfiles for Each Service
 
 Build docker images using openjdk:17-jdk-slim as parent image to run .Jar file.
 
