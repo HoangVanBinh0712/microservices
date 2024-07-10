@@ -21,7 +21,7 @@
 ### URLs
 
 - Swagger: [http://localhost:8080/webjars/swagger-ui/index.html](http://localhost:8080/webjars/swagger-ui/index.html)
-- Zipkin: [http://localhost:9411/zipkin/](http://localhost:9411/zipkin/)
+- Zipkin: [http://localhost:9411/zipkin/](http://localhost:9411)
 - Redis: [http://localhost:6379](http://localhost:6379)
 
 ## Deploying the Application on AWS
@@ -39,7 +39,7 @@ cd Redis project
 
 Build docker images using openjdk:17-jdk-slim as parent image to run .Jar file.
 
-### 2. Running the Application with Containers
+### 3. Running the Application with Containers
 
 **Step 1:** Create `docker-compose.yaml` file.
 
