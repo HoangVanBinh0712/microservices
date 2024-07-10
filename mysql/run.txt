@@ -1,0 +1,5 @@
+open dir mysql
+
+open cmd
+
+docker-compose -f docker-compose-mysql.yml up

@@ -20,6 +20,31 @@ spring:
   application:
     name: sale-service
 
+  datasource:
+    url: jdbc:mysql://localhost:3306/sale
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+#  cache:
+#    type: redis
+#    host: localhost
+#    port: 6379
+#    redis:
+#      time-to-live: 60000
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+#      username: redisMyUsername
+#      password: redisMyPassword
+      timeout: 60000
+
 management:
   tracing:
     sampling:
@@ -30,6 +55,12 @@ management:
 logging:
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+  level:
+    org:
+      springframework:
+        data:
+          redis: DEBUG
+        cache: DEBUG
 
 swagger:
   gateway-url: ${GATEWAY_URL:http://localhost:8080}${server.servlet.context-path}

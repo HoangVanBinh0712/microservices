@@ -1,0 +1,5 @@
+open dir zipkin
+
+open cmd
+
+docker-compose -f docker-compose-zipkin.yml up

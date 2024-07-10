@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  zipkin-server:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin-server
+    restart: always
+    expose:
+      - '9411'
+    ports:
+      - '9411:9411'
+    volumes:
+      - /path/to/local/data:/root/zipkin
+#    environment:
+#      - ZIPKIN_BASE_URL=http://zipkin-server:9411
+#      - STORAGE_TYPE=mem
+#      - RABBIT_URI=amqp://guest:guest@rabbitmq:5672
+#      - RABBIT_MQ_URI=amqp://guest:guest@rabbitmq:5672
+#      - RABBIT_HOST=rabbitmq
+#      - RABBIT_PORT=5672
+#      - RABBIT_USER=guest
+#      - RABBIT_PASSWORD=guest
+#      - RABBIT_VIRTUAL_HOST=/
+#      - RABBIT_QUEUE=zipkin
+#      - RABBIT_EXCHANGE=zipkin
+#      - RABBIT_ROUTING_KEY=zipkin
+
+#  dataflow-server:
+#    environment:
+#      - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_ZIPKIN_ENABLED=true
+#      - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_ZIPKIN_BASEURL=http://zipkin-server:9411

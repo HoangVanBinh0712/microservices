@@ -1,0 +1,54 @@
+version: '3.7'
+
+services:
+
+  redis-server:
+    image: redis:latest
+    container_name: redis-server
+    hostname: redis-server
+    restart: always
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+#    command: redis-server --requirepass redisMyPassword
+    environment:
+      - REDIS_PASSWORD=redisMyPassword
+    volumes:
+      - /path/to/local/redis_volume_data:/root/redis
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+#      test: [ "CMD", "redis-cli", "-a", "redisMyPassword", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - redis-network
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: ghcr.io/joeferner/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis-server:6379
+#      - REDIS_PASSWORD=redisMyPassword
+    volumes:
+      - /path/to/local/redis_commander_volume_data:/root/redis-commander
+
+    depends_on:
+      - redis-server
+    expose:
+      - "8081"
+    ports:
+      - "8081:8081"
+    networks:
+      - redis-network
+
+networks:
+  redis-network:
+    driver: bridge
+
+volumes:
+  redis_volume_data:
+  redis_commander_volume_data:
